@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "adapta-cliente-handoff/v1",
+  "phase": 1,
+  "versions": {
+    "package": "1.0.0",
+    "adapta": "0.9.5",
+    "adaptaCliente": "1.0.0"
+  },
+  "generatedAt": "2026-09-16T13:05:37.592Z",
+  "files": [
+    {
+      "path": "04_fase-atual/README.md",
+      "sha256": "e75cb607ca40f5093d3299945474f14fc468d87d60411d9573bac2b0b6ace634",
+      "classification": "template-publico"
+    },
+    {
+      "path": "04_fase-atual/fase.md",
+      "sha256": "d23f951f494284dcebc7d0dc02ad00f7b6f3bda68d146b50546c39ad63cf1408",
+      "classification": "fase-atual"
+    },
+    {
+      "path": "04_fase-atual/specs/spec-fase-1-001-ingestao-dados-carteira.md",
+      "sha256": "7fde17416c214ad64e7e9c5c9e4ec0f5264d731caeab1fa3b25ad2b4bc91892f",
+      "classification": "spec-fase-atual"
+    },
+    {
+      "path": "04_fase-atual/specs/spec-fase-1-002-visao-carteira.md",
+      "sha256": "75af29721e7213975605aec73eab186cccdf0a14bc8518c99d313d119ce6ccd2",
+      "classification": "spec-fase-atual"
+    },
+    {
+      "path": "04_fase-atual/specs/spec-fase-1-003-dicionario-qualidade.md",
+      "sha256": "e7f744531a916ebb5c4936519de205074bd8b319981a5c193b0e64db20e95130",
+      "classification": "spec-fase-atual"
+    }
+  ]
+}
