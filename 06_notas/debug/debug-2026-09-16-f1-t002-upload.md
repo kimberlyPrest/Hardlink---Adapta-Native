@@ -1,13 +1,11 @@
 # Debug Summary — F1-T002 — 2026-09-16
 
-**Task e problema:** F1-T002; upload dos cinco CSVs exibiu `Carga não concluída / Something went wrong` em tentativas humanas.
+**Problema:** upload dos cinco CSVs reais falhava com `Carga não concluída / Something went wrong`.
 
-**Reprodução:** o transporte JSON original excedeu o limite do proxy e retornou HTTP 413 antes da rota. Após a migração para multipart, o fluxo completo no navegador com cinco fixtures pequenos chegou ao backend, recebeu HTTP 200 e renderizou o relatório `Publicado`. Uma carga multipart grande anterior chegou à rota, mas consumiu cerca de 169 segundos no parser caractere a caractere.
+**Causa confirmada:** os arquivos somam aproximadamente 74.710 KB e o maior tem 38.461 KB. O Nginx rejeitou com HTTP 413 tanto uma carga sintética de 76.503.045 bytes quanto um arquivo individual de aproximadamente 38 MB, antes do hook.
 
-**Causa raiz:** houve duas causas técnicas: (1) serialização JSON dos arquivos ultrapassava o proxy; (2) o parser CSV genérico caractere a caractere era lento para arquivos grandes sem campos quoted.
+**Correções:** transporte parcelado em multipart com blocos de aproximadamente 3 MiB; coleções temporárias `carteira_uploads` e `carteira_upload_chunks`; finalização atômica; parser rápido para CSV sem campos quoted; ordenação corrigida para `chunk_index`; `chunk_index` tornou-se opcional porque o PocketBase trata zero como blank em campo obrigatório; multipart convertido via `$filesystem.fileFromMultipart(...)`; limpeza dos chunks em rejeição.
 
-**Correção:** frontend envia `FormData`/`multipart/form-data`; hook lê `e.findUploadedFiles(...)` e `readerToString(...)`; erros 413 recebem mensagem específica; Skip v0.8 adiciona caminho rápido por linhas para CSVs sem aspas e mantém parser completo para CSVs quoted.
+**Verificação:** Skip v0.0.21 passou no QA oficial. Cinco fixtures pequenos foram enviados em cinco chunks e finalizados com HTTP 200, status `published` e cinco linhas válidas. A carga sintética de 76.503.045 bytes foi enviada em 27 chunks, todos HTTP 200; a finalização chegou à validação e retornou HTTP 400 estruturado `invalid_csv_headers` para cabeçalhos deliberadamente inválidos, sem 413 ou erro interno. Contas temporárias foram removidas.
 
-**Verificação automática:** QA oficial v0.8 passou. Multipart válido retornou 200 e publicou cinco linhas; multipart inválido retornou 400 com `missing_headers: ["E-mail"]`; fluxo real no navegador com cinco fixtures retornou 200 e mostrou o relatório publicado; contas temporárias foram removidas. O volume exato dos cinco CSVs reais ainda não foi validado pelo executor.
-
-**Gate atual:** aguardando teste humano.
+**Gate:** aguardando teste humano com os cinco CSVs reais no preview. Nenhum CSV real foi publicado pelos testes automatizados.
