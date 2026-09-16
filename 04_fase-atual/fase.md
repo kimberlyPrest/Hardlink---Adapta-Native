@@ -1,13 +1,13 @@
 # Fase 1 — Tarefas gerais
 
-**Status:** pronta para execução  
+**Status:** em execução (1/9 tasks concluída — 11,1%)  
 **Escopo:** base operacional, ingestão dos dados atuais, visão de carteira e dicionário de qualidade.
 
 ## Tasks
 
 | ID | Task | Dono | SPEC | Critério | Recorte da prova | Evidência esperada | Pré-condições | Ponto de parada | Status |
 |---|---|---|---|---|---|---|---|---|---|
-| F1-T001 | Modelar lote e staging das cinco entidades | Sistemas Hardlink | SPEC-1-001 | tabelas e chaves de carga existem | CA-1-001 / RED | schema/migration | banco operacional definido | schema criado sem importação parcial | ☐ |
+| F1-T001 | Modelar lote e staging das cinco entidades | Sistemas Hardlink | SPEC-1-001 | tabelas e chaves de carga existem | CA-1-001 / RED | schema/migration | banco operacional definido | schema criado sem importação parcial | ☑ 2026-09-16 |
 | F1-T002 | Implementar validação de cabeçalho e importação CSV | Sistemas Hardlink | SPEC-1-001 | carga válida importa e carga inválida rejeita | CA-1-001, CA-1-002 / GREEN | relatório de carga | F1-T001 | importador rejeita erro crítico | ☐ |
 | F1-T003 | Implementar relatório de qualidade e rollback por lote | Sistemas Hardlink | SPEC-1-001 | rollback remove apenas o lote selecionado | CA-1-003 / REGRESSÃO | log + consulta | F1-T002 | rollback demonstrado | ☐ |
 | F1-T004 | Criar consulta consolidada e filtros de carteira | Sistemas Hardlink | SPEC-1-002 | filtros retornam dados vinculados | CA-1-004 / GREEN | captura/JSON | dados publicados | consulta disponível para admin | ☐ |
